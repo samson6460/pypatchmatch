@@ -1,0 +1,7 @@
+matplotlib
+numpy
+opencv-python
+openslide-python
+packaging
+Pillow
+tqdm
