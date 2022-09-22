@@ -2,13 +2,16 @@
 
 ![example](https://img.shields.io/badge/Python-3.x-blue.svg)
 
-<center><em>"Once upon a time<br>
+<p align="center">
+<em>"Once upon a time<br>
 You randomly croped some tiles<br>
 From some whole slides<br>
 Where does the tile lie in slide<br>
 Pixel-wise comparison will let you die<br>
 Thank God that here is a light<br>
-`patchmatching` will save your life"</em></center><br>
+`patchmatching` will save your life"</em>
+</p>
+
 
 `patchmatching` is a tool that can help you efficiently find the location of all patches in one of several WSIs (whole slide images).
 
@@ -57,15 +60,15 @@ python match.py dir_wsi dir_patch [-lv LEVEL] [-ow ORIGINAL_WIDTH] [-oh ORIGINAL
 
 - **optional arguments**:
   - **-h, --help**: show this help message and exit.
-  - **-lv, --level**: level number for cropping patches from WSI.
-  - **-ow, --original_width**: original width of cropped patches.
-  - **-oh, --original_height**: original height of cropped patches.
-  - **-ds, --dsample**: downsampling rate for matching.
-  - **-t, --threshold**: threshold for SIFT algorithm.
-  - **-fr, --finetune_range**: the pixel range for validating matched patch.
-  - **-ft, --finetune_thresh**: threshold for fine-tuning.
+  - **-lv, --level**: level number for cropping patches from WSI, defualt: 0.
+  - **-ow, --original_width**: original width of cropped patches, defualt: 3432.
+  - **-oh, --original_height**: original height of cropped patches, defualt: 1884.
+  - **-ds, --dsample**: downsampling rate for matching, default: 8.
+  - **-t, --threshold**: threshold for SIFT algorithm, range: 0~1, default: 0.4.
+  - **-fr, --finetune_range**: the pixel range for validating matched patch, default: 60.
+  - **-ft, --finetune_thresh**: threshold for fine-tuning, range: 0~1, default: 0.9.
   - **-v, --verbose**: display cropping and patch image.
-  - **-o, --output**: path of output file.
+  - **-o, --output**: path of output file, default: "output.json".
 
 ## Output
 

@@ -135,6 +135,9 @@ def match(dir_wsi: str, dir_patch: str,
         slide.close()
         if len(patch_info_dict) <= 0:
             break
+
+    print(f"Matched {(len(matched_dict))}/{(len(name_list_patch))} patches")
+
     return matched_dict
 
 
