@@ -6,9 +6,15 @@ from math import ceil
 from tqdm import tqdm
 import numpy as np
 import openslide
-from utils import matcher, gen_patch_info
-from utils import crop_img_to_arr, get_crop_kpt_des, integrate_coords
-from utils import crop_finetune_img, fine_tune, plot_comp_img
+
+try:
+    from utils import matcher, gen_patch_info
+    from utils import crop_img_to_arr, get_crop_kpt_des, integrate_coords
+    from utils import crop_finetune_img, fine_tune, plot_comp_img
+except ImportError:
+    from .utils import matcher, gen_patch_info
+    from .utils import crop_img_to_arr, get_crop_kpt_des, integrate_coords
+    from .utils import crop_finetune_img, fine_tune, plot_comp_img
 
 
 def match(dir_wsi: str, dir_patch: str,
@@ -59,10 +65,14 @@ def match(dir_wsi: str, dir_patch: str,
         print("Matching patches in slide:", name_wsi)
 
         if debug_mode:
-            (slide.read_region(
+            thumbnail = (slide.read_region(
                 (0, 0),
                 len(slide.level_dimensions) - 1,
-                slide.level_dimensions[-1])).show()
+                slide.level_dimensions[-1]))
+            try:
+                display(thumbnail)
+            except NameError:
+                thumbnail.show()
 
         wsi_width, wsi_height = slide.level_dimensions[0]
 
@@ -94,8 +104,7 @@ def match(dir_wsi: str, dir_patch: str,
                     pbar.update(1)
 
         for name_patch, xy_val in xy_dict.items():
-            print("Checking and fine-tuning patch:",
-                name_patch, "...")
+            print("Checking and fine-tuning patch:", name_patch, "...")
             coord = integrate_coords(xy_val)
 
             crop_img = crop_finetune_img(
@@ -113,15 +122,15 @@ def match(dir_wsi: str, dir_patch: str,
                 width_i, height_i = coord
                 new_width_i = width_i + d_x*ratio*dsample_match
                 new_height_i = height_i + d_y*ratio*dsample_match
-                print("Matched! Patch:", name_patch,
-                    "is in slide:", name_wsi, ", start with:",
-                    new_width_i, new_height_i)
+                print("Matched!")
                 info_dict = {}
                 info_dict["WSI name"] = name_wsi
                 info_dict["start coord"] = [new_width_i, new_height_i]
                 matched_dict[name_patch] = info_dict
 
                 if debug_mode:
+                    print(f"Patch: {name_patch} is in slide: {name_wsi}"
+                          f", start with: ({new_width_i}, {new_height_i}).")
                     plot_comp_img(best_crop_img, patch_img)
 
                 del patch_info_dict[name_patch]
@@ -136,7 +145,7 @@ def match(dir_wsi: str, dir_patch: str,
         if len(patch_info_dict) <= 0:
             break
 
-    print(f"Matched {(len(matched_dict))}/{(len(name_list_patch))} patches")
+    print(f"Matched {(len(matched_dict))}/{(len(name_list_patch))} patches.")
 
     return matched_dict
 
@@ -208,4 +217,4 @@ if __name__ == "__main__":
         debug_mode)
 
     if save_json(matched_dict, path_output):
-        print(f"Saved output file to \"{path_output}\" successfully")
+        print(f"Saved output file to \"{path_output}\" successfully.")
