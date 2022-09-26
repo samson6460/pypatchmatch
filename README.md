@@ -1,6 +1,6 @@
 # pypatchmatch
 
-![](https://img.shields.io/badge/Python-3.x-blue.svg)
+![](https://img.shields.io/badge/Python-3.x-blue.svg) ![](https://colab.research.google.com/assets/colab-badge.svg)
 
 <p align="center">
 <em>"Once upon a time<br>
@@ -145,7 +145,7 @@ match.save_json(matched_dict: dict, path: str):
 2. Run the following command in terminal (replace \<root> to yours):
 
 ```
-python match.py <root>/PatchMatch/tcga_wsi  <root>/PatchMatch/tcga_wsi -v
+python match.py <root>/PatchMatch/tcga_wsi  <root>/PatchMatch/tcga_patches -v
 ```
 
 You are supposed to see some output like this:
@@ -181,3 +181,7 @@ Patch: S004.jpg is in slide: TCGA-55-6983-01Z-00-DX1.8f940a64-1f1b-4e6e-99ea-418
 Matched 10/10 patches.
 Saved output file to "output.json" successfully.
 ```
+
+You can also click the button below to open the sample code in Colab:
+
+[![](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1Xof7ga2tOJFizXtL09-9dn7h9ZmzI2VK?usp=sharing)
