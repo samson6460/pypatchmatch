@@ -58,17 +58,14 @@ def match(dir_wsi: str, dir_patch: str,
     for name_wsi in name_list_wsi:
         slide = openslide.OpenSlide(os.path.join(dir_wsi, name_wsi))
 
-        ratio = int(slide.level_dimensions[0][0]/slide.level_dimensions[level][0])
+        ratio = round(slide.level_downsamples[level])
         crop_width = int(ori_crop_width*ratio)
         crop_height = int(ori_crop_height*ratio)
 
         print("Matching patches in slide:", name_wsi)
 
         if debug_mode:
-            thumbnail = (slide.read_region(
-                (0, 0),
-                len(slide.level_dimensions) - 1,
-                slide.level_dimensions[-1]))
+            thumbnail = slide.get_thumbnail(slide.level_dimensions[-1])
             try:
                 display(thumbnail)
             except NameError:
